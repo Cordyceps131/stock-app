@@ -21,51 +21,56 @@
 
 
 ## RELAÇÕES
-utilizadores 1:N movimentos  
-produtos N:M localizações -> resolvido pela tabela stock_localizacao
-produtos N:1 categorias
-movimentos N:1 produtos
+utilizadores 1:N movimentos 
+produtos N:M localizações -> resolvido pela tabela stock_localizacao 
+produtos N:1 categorias 
+movimentos N:1 produtos 
 movimentos N:1 localizações
 
 
 
 ## ATRIBUTOS
-Utilizadores
-1.  id INTEGER AUTOINCREMENT UNIQUE PK
-    nome TEXT NOT NULL
-    email TEXT NOT NULL UNIQUE
+Utilizadores 
+1.  id INTEGER AUTOINCREMENT UNIQUE PK 
+    nome TEXT NOT NULL 
+    email TEXT NOT NULL UNIQUE 
     telemovel TEXT 
-    password_hash TEXT NOT NULL
-    admin BOOL NOT NULL
+    password_hash TEXT NOT NULL 
+    admin BOOL NOT NULL 
 
-Produtos
-2.  id INTEGER AUTOINCREMENT UNIQUE PK
-    nome TEXT NOT NULL
-    preco DECIMAL NOT NULL
-    stock_minimo INTEGER NOT NULL
-    id_categoria INTEGER FK
 
-Localizações
-3.  id INTEGER AUTOINCREMENT UNIQUE PK
-    nome TEXT NOT NULL
+Produtos 
+2.  id INTEGER AUTOINCREMENT UNIQUE PK 
+    nome TEXT NOT NULL 
+    preco DECIMAL NOT NULL 
+    stock_minimo INTEGER NOT NULL 
+    id_categoria INTEGER FK 
 
-Stock-Localização
-3.1 id_produto PK_FK
-    id_localizacao PK_FK
-    quantidade INTEGER CHECK(quantidade >= 0) NOT NULL
 
-Categorias
-4.  id INTEGER AUTOINCREMENT UNIQUE PK
-    nome TEXT NOT NULL
+Localizações 
+3.  id INTEGER AUTOINCREMENT UNIQUE PK 
+    nome TEXT NOT NULL 
 
-Movimentos
-5.  id INTEGER AUTOINCREMENT UNIQUE PK
-    tipo TEXT CHECK(tipo in ('entrada', 'saida', 'transferencia', 'acerto', 'quebra', 'anulacao')) NOT NULL
-    variacao INTEGER NOT NULL
-    data TIMESTAMPTZ DEFAULT now()
-    justificacao TEXT  
-    id_produto FK NOT NULL
-    id_localizacao FK NOT NULL
-    id_utilizador FK NOT NULL
-    id_movimento_anulado FK
+
+Stock-Localização 
+3.1 id_produto PK_FK 
+    id_localizacao PK_FK 
+    quantidade INTEGER CHECK(quantidade >= 0) NOT NULL 
+
+
+Categorias 
+4.  id INTEGER AUTOINCREMENT UNIQUE PK 
+    nome TEXT NOT NULL 
+
+
+Movimentos 
+5.  id INTEGER AUTOINCREMENT UNIQUE PK 
+    tipo TEXT CHECK(tipo in ('entrada', 'saida', 'transferencia', 'acerto', 'quebra', 'anulacao')) NOT NULL 
+    variacao INTEGER NOT NULL 
+    data TIMESTAMPTZ DEFAULT now() 
+    justificacao TEXT   
+    id_produto FK NOT NULL 
+    id_localizacao FK NOT NULL 
+    id_utilizador FK NOT NULL 
+    id_movimento_anulado FK 
     id_transferencia INTEGER
