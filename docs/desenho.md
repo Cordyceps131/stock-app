@@ -75,3 +75,37 @@ Este documento detalha os requisitos de negócio, as entidades do sistema, as su
 * `id_utilizador`: **INTEGER** `FK` `NOT NULL` (Referências `Utilizadores(id)`)
 * `id_movimento_anulado`: **INTEGER** `FK` `NULL` (Referências `Movimentos(id)`)
 * `id_transferencia`: **INTEGER** `NULL` *(Usado para ligar o movimento de saída ao de entrada numa transferência)*
+
+CREATE TABLE movimentos (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    tipo TEXT NOT NULL CHECK (tipo IN ('entrada', 'saida', 'transferencia', 'acerto', 'quebra', 'anulacao')),
+    variacao INTEGER NOT NULL,
+    data TIMESTAMPTZ DEFAULT now(),
+    justificacao TEXT,
+    id_produto INTEGER NOT NULL,
+    id_localizacao INTEGER NOT NULL,
+    id_utilizador INTEGER NOT NULL,
+    id_movimento_anulado INTEGER,
+    id_transferencia INTEGER,
+
+    -- Chaves Estrangeiras (Foreign Keys)
+    CONSTRAINT fk_movimentos_produto 
+        FOREIGN KEY (id_produto) 
+        REFERENCES produtos(id) 
+        ON DELETE RESTRICT,
+        
+    CONSTRAINT fk_movimentos_localizacao 
+        FOREIGN KEY (id_localizacao) 
+        REFERENCES localizacoes(id) 
+        ON DELETE RESTRICT,
+        
+    CONSTRAINT fk_movimentos_utilizador 
+        FOREIGN KEY (id_utilizador) 
+        REFERENCES utilizadores(id) 
+        ON DELETE RESTRICT,
+        
+    CONSTRAINT fk_movimentos_anulado 
+        FOREIGN KEY (id_movimento_anulado) 
+        REFERENCES movimentos(id) 
+        ON DELETE SET NULL
+);
